@@ -96,9 +96,17 @@
 <input type="button" value="Show Me a Popup!" id="popup-alert-button">
 </fieldset>
 
+
 <script>
   "use strict";
   // code here for above problem
+  var btn = document.getElementById('popup-alert-button');
+
+  function alertClick(evt) {
+    alert("Button clicked!");
+  }
+
+  btn.addEventListener('click', alertClick);
 </script>
 
 
@@ -118,6 +126,15 @@
 <script>
   "use strict";
   // code here for above-problem
+
+  var btn2 = document.getElementById("change-hello-to-goodbye-button")
+  var greeting_txt = document.getElementById("message-to-change");
+
+  function changeClick(evt) {
+    greeting_txt.innerHTML = "Goodbye";
+  }
+
+  btn2.addEventListener('click', changeClick);
 </script>
 
 <div class="hint">
@@ -148,6 +165,17 @@
 <script>
   "use strict";
   // code here for above problem
+  var btn3 = document.getElementById("prevent-form-submission-button");
+  var form = document.getElementById("prevent-form-submission-form");
+  // form.removeAttribute("action"); not sure why this doesn't work
+  // also tried changing the type of btn3 from a input='submit' to button, didn't work
+  form.setAttribute('onsubmit', 'alertClick3; return false;');
+
+  function alertClick3(evt) {
+    alert("Button clicked makes popup and nothing else!");
+  }
+
+  btn3.addEventListener('click', alertClick3);
 </script>
 
 <div class="hint">
@@ -181,25 +209,31 @@
 
 //  Here's a stub of a function you can use!
 
-//  function reverseString() {
-//    var msg = "Porcupines are cute";
-//
-//    // do some stuff here to reverse that string into a new variable
-//    var newMsg = "This should be the reversed string";
-//
-//    alert(newMsg);
-//  }
+  function reverseString(evt) {
+    var msg = "Porcupines are cute";
+
+    // do some stuff here to reverse that string into a new variable
+    var msgArray = msg.split('');
+
+    var revMsg = msgArray.reverse().join('');
+
+    alert(revMsg);
+ }
 
 // Here's a stub of event stuff you could use
 //
 
 //  var button = document.getElementById('reverse-string-button');
 //  button.addEventListener('click', reverseString);
+
+  var btn4 = document.getElementById('reverse-string-button');
+
+  btn4.addEventListener('click', reverseString);
 </script>
 
 
 
-
+<script src="https://code.jquery.com/jquery.js"></script>
 
 
 <h2>jQuery</h2>
@@ -220,6 +254,12 @@
 <script>
   "use strict";
   // code here for above problem
+
+  $('input.tricky-to-find').on('click', function (evt) {
+    alert("Cheese");
+    }
+  );
+
 </script>
 
 <div class="hint">
@@ -248,6 +288,10 @@
 <script>
   "use strict";
   // put your code here
+  $('img').on('dblclick', function (evt) {
+    $('img').attr('src', 'https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/23695_pets_vertical_store_dogs_small_tile_8._CB312176604_.jpg');
+    }
+  );
 </script>
 
 <div class="hint">
@@ -282,6 +326,9 @@
 <script>
   "use strict";
   // put your code here
+  $('#make-a-porcupine').on('click', function (evt) {
+    $('#cute-porcupine-image').delay(1000).slideDown(1500).fadeOut(3000);
+  });
 </script>
 
 <div class="hint">
@@ -326,6 +373,19 @@
 <script>
   "use strict";
   // put your code here
+
+  function showText(evt) {
+    var favFood = $('#favorite-food-input').val();
+    // had some trouble realizing this but needed to assign this var inside this
+    // function, scope
+    $('#agreeable-text').html(function() {
+      return "I like " + favFood + ", too!";
+    });
+  }
+
+  $('#agreeable-form').attr('onsubmit', 'showText; return false;');
+  $('form#agreeable-form input[type="submit"]').on('click', showText);
+
 </script>
 
 <div class="hint">
@@ -356,6 +416,39 @@
 <script>
   "use strict";
   // put your code here
+  function playGame() {
+    var guessedRight = false;
+    var ranInt = Math.floor((Math.random() * 100) + 1);
+    while (guessedRight === false) {
+      
+      var userGuess = prompt("Guess my number from 1 to 100. Type 'quit' to quit.")
+
+      $('#play-guessing-game').on('click', userGuess);
+      
+      if (userGuess != null) {
+        
+        // giving user opportunity to leave
+        if (userGuess === 'quit') {
+          break;
+        }
+
+        // evaluating user input
+        else if (parseInt(userGuess, 10) > ranInt) {
+          alert('Too high.');
+        }
+        else if (parseInt(userGuess, 10) < ranInt) {
+          alert('Too low.');
+        }
+        else if (parseInt(userGuess, 10) === ranInt) {
+          alert('Congrats, you got it!');
+          guessedRight = true;
+        }
+      }
+    }
+  }
+
+  $('#play-guessing-game').on('click', playGame);
+  
 </script>
 
 <div class="hint">
@@ -397,6 +490,44 @@
 <script>
   "use strict";
   // put your code here
+
+  // could not test this code because the browser would not work with this for some reason
+
+  // function playGame2() {
+  //   $('#try-this-number, #number-guessed').removeAttr('disabled');
+  //   var guessedRight2 = false;
+  //   var ranInt2 = Math.floor((Math.random() * 100) + 1);
+
+  //   while (guessedRight2 === false) {
+      
+  //     var userGuess2 = $('#try-this-number').val();
+
+  //     $('#play-guessing-game-2').on('click', userGuess2);
+      
+  //     if (userGuess2 != null) {
+        
+  //       // giving user opportunity to leave
+  //       if (userGuess2 === 'quit') {
+  //         break;
+  //       }
+
+  //       // evaluating user input
+  //       else if (userGuess2 > ranInt2) {
+  //         $('#number-guessing-msg').html('Too high.')
+  //       }
+  //       else if (userGuess2 < ranInt2) {
+  //         $('#number-guessing-msg').html('Too low.')
+  //       }
+  //       else if (userGuess2 === ranInt2) {
+  //         $('#number-guessing-msg').html('Just right!')
+  //         $('#try-this-number').prop("disabled");
+  //         guessedRight2 = true;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // $('#play-guessing-game-2').on('click', playGame2);
 </script>
 
 
@@ -428,8 +559,18 @@
   "use strict";
 
     var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
-
-  // put the rest of your code here
+    $('#make-prime-boxes').on('click', createBoxes);
+    function createBoxes () {
+      $('#prime-box-area').html(function () {
+        var i = 0;
+        while (i < 5) {
+          // this is so that it can create 5 of these
+          // var primeNum = a formula to generate prime numbers, puts it in a variable that I will plug in in the midst of the html code
+          // creates a div with background color iterating through the colors in the list with the index i (so it serves multiple purposes)
+          return "<div class='prime-box' style='background-color: " + PRIME_COLORS[i] + "'>" + primeNum + "</div>"
+        }
+      });
+    }
 </script>
 
 
